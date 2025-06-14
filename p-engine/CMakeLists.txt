@@ -1,10 +1,32 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.14)  # FetchContent requires CMake 3.14+
 
 project(p-engine)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-g")
+
+# Include FetchContent
+include(FetchContent)
+
+# Fetch SFML
+FetchContent_Declare(
+    sfml
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG 2.6.1
+)
+
+# Configure SFML build options
+set(SFML_BUILD_WINDOW TRUE)
+set(SFML_BUILD_GRAPHICS TRUE)
+set(SFML_BUILD_AUDIO TRUE)
+set(SFML_BUILD_NETWORK FALSE)
+set(SFML_BUILD_SYSTEM TRUE)
+set(SFML_BUILD_EXAMPLES FALSE)
+set(SFML_BUILD_DOC FALSE)
+
+# Make SFML available
+FetchContent_MakeAvailable(sfml)
 
 # Add the source files to your project
 file(GLOB SOURCE_FILES
@@ -28,9 +50,6 @@ add_library(${PROJECT_NAME} ${SOURCE_FILES})
 target_include_directories(${PROJECT_NAME} PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
-
-# Find SFML package
-find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
 
 # Link SFML libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE

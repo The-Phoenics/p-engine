@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 4.0)
 
 project(game)
 
@@ -24,4 +24,10 @@ include_directories(${PROJECT_NAME} PUBLIC
 # Add the executable target
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE p-engine)
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    p-engine
+    sfml-system
+    sfml-window
+    sfml-graphics
+    sfml-audio
+)
